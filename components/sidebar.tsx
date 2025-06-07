@@ -78,7 +78,7 @@ export default function Sidebar() {
             {conversations.map((conversation) => (
               <motion.div
                 key={conversation.id}
-                className="relative p-2.5 rounded-lg hover:bg-white cursor-pointer transition-colors group"
+                className="relative p-2.5 rounded-lg hover:bg-white cursor-pointer transition-colors group w-full"
                 initial={{ opacity: 0, x: -50 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: 50 }}
