@@ -1,0 +1,33 @@
+import { betterAuth } from "better-auth";
+import { drizzleAdapter } from "better-auth/adapters/drizzle";
+import { db } from "@/lib/db/index"; // your drizzle instance
+import { account, session, user, verification } from "./db/schema";
+
+const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
+const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
+
+if (!GOOGLE_CLIENT_ID) {
+  throw new Error("GOOGLE_CLIENT_ID isn't set in .env");
+}
+
+if (!GOOGLE_CLIENT_SECRET) {
+  throw new Error("GOOGLE_CLIENT_SECRET isn't set in .env");
+}
+
+export const auth = betterAuth({
+  database: drizzleAdapter(db, {
+    provider: "pg", // or "mysql", "sqlite"
+    schema: {
+      user: user,
+      session: session,
+      account: account,
+      verification: verification,
+    },
+  }),
+  socialProviders: {
+    google: {
+      clientId: process.env.GOOGLE_CLIENT_ID as string,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+    },
+  },
+});
