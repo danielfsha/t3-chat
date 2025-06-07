@@ -54,7 +54,7 @@ export default function Sidebar() {
       initial={{ x: -SIDEBAR_WIDTH }}
       animate={{ x: isSidebarOpen ? 0 : -SIDEBAR_WIDTH }}
       transition={{ type: "spring", stiffness: 300, damping: 30 }}
-      className={`fixed top-0 left-0 w-[${SIDEBAR_WIDTH}px] h-full z-40 text-white`}
+      className={`fixed top-0 left-0 w-[256px] h-full z-40 text-white`}
     >
       <div className="flex flex-col h-full p-4 py-2 pb-6">
         {/* Header */}

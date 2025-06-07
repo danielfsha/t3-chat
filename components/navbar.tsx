@@ -14,6 +14,8 @@ import {
 import { AnimatePresence, motion } from "motion/react";
 import { useState } from "react";
 
+import { Button } from "./ui/button";
+
 export default function Navbar() {
   const [isDarkTheme, setIsDarkTheme] = useState();
   const { isSidebarOpen, toggleSidebar } = useSidebar();
@@ -21,13 +23,10 @@ export default function Navbar() {
   return (
     <nav className="fixed top-0 left-0 w-full h-14 flex items-center justify-between px-2 z-[100]">
       {/* Toggle Button */}
-      <div className="flex items-center justify-center bg-white shadow-lg rounded-md p-1 hover:bg-gray-50 transition-colors border border-gray-200">
-        <button
-          onClick={toggleSidebar}
-          className="w-7 h-7 flex items-center justify-center"
-        >
+      <div className="flex items-center justify-center bg-white shadow-lg rounded-md hover:bg-gray-50 transition-colors border border-gray-200">
+        <Button onClick={toggleSidebar} variant="ghost" size="icon">
           <Sidebar size={16} />
-        </button>
+        </Button>
         <AnimatePresence initial={false}>
           {!isSidebarOpen && (
             <motion.div
@@ -66,19 +65,13 @@ export default function Navbar() {
         </AnimatePresence>
       </div>
 
-      <div className="flex items-center justify-center space-x-1 bg-white shadow-lg rounded-md p-1 hover:bg-gray-50 transition-colors border border-gray-200">
-        <button
-          onClick={toggleSidebar}
-          className="w-7 h-7 flex items-center justify-center"
-        >
-          <Settings size={16} />
-        </button>
-        <button
-          onClick={toggleSidebar}
-          className="w-7 h-7 flex items-center justify-center"
-        >
-          {isDarkTheme ? <MoonIcon size={16} /> : <SunIcon size={16} />}
-        </button>
+      <div className="flex items-center justify-center bg-white shadow-lg rounded-md hover:bg-gray-50 transition-colors border border-gray-200">
+        <Button variant="ghost" size="icon">
+          <Settings size={24} />
+        </Button>
+        <Button variant="ghost" size="icon">
+          {isDarkTheme ? <MoonIcon size={20} /> : <SunIcon size={20} />}
+        </Button>
       </div>
     </nav>
   );

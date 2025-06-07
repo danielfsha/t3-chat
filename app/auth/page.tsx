@@ -7,7 +7,7 @@ import { signIn } from "@/lib/auth-client";
 
 export default function Page() {
   return (
-    <div className="w-screen h-screen flex flex-col items-center justify-center space-y-8">
+    <div className="w-screen h-screen flex flex-col items-center justify-center space-y-8 text-center">
       <div className="flex items-center justify-center space-x-2">
         <h1 className="font-bold text-xl">Welcome to </h1>
         <img src={"./demo_wordmark.svg"} className="w-30  h-auto aspect-auto" />
@@ -20,7 +20,7 @@ export default function Page() {
           })
         }
         size={"lg"}
-        className="p-4 px-22 h-auto w-auto space-x-3 text-xl"
+        className="text-[16px] bg-[#D3699B] border-[#8E3B65] border-1"
       >
         <Image src="./google.svg" width={18} height={18} alt="Google" />
         Continue with Google
