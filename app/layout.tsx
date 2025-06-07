@@ -17,8 +17,8 @@ export const metadata: Metadata = {
   description: "",
 };
 
-
-import {ReactQueryClientProvider} from '@/context/query-client'
+import { ReactQueryClientProvider } from "@/context/query-client";
+import { SidebarProvider } from "@/context/sidebar-context";
 
 export default function RootLayout({
   children,
@@ -31,7 +31,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ReactQueryClientProvider>
-        {children}
+          <SidebarProvider>{children}</SidebarProvider>
         </ReactQueryClientProvider>
       </body>
     </html>
