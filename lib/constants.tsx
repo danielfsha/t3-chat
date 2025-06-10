@@ -1,8 +1,9 @@
 export const SIDEBAR_WIDTH = 256;
 
+import { generateId } from "ai";
+import { genSaltSync, hashSync } from "bcrypt-ts";
+
 import {
-  Search,
-  ChevronDown,
   Sparkles,
   Brain,
   Zap,
@@ -328,5 +329,60 @@ export const categories: FilterCategory[] = [
         description: "Optimize your coding solutions",
       },
     ],
+  },
+];
+
+export function generateHashedPassword(password: string) {
+  const salt = genSaltSync(10);
+  const hash = hashSync(password, salt);
+
+  return hash;
+}
+
+export function generateDummyPassword() {
+  const password = generateId(12);
+  const hashedPassword = generateHashedPassword(password);
+
+  return hashedPassword;
+}
+
+export const guestRegex = /^guest-\d+$/;
+
+export const DUMMY_PASSWORD = generateDummyPassword();
+
+export const messages: Array<any> = [
+  {
+    id: "msg1",
+    role: "user",
+    parts: [{ type: "text", text: "Hi there!" }],
+    content: "Hi there!",
+    createdAt: new Date("2025-06-08T10:00:00Z"),
+  },
+  {
+    id: "msg2",
+    role: "assistant",
+    parts: [{ type: "text", text: "Hello! How can I help you today?" }],
+    content: "Hello! How can I help you today?",
+    createdAt: new Date("2025-06-08T10:00:05Z"),
+  },
+  {
+    id: "msg3",
+    role: "user",
+    parts: [{ type: "text", text: "Tell me a fun fact." }],
+    content: "Tell me a fun fact.",
+    createdAt: new Date("2025-06-08T10:01:00Z"),
+  },
+  {
+    id: "msg4",
+    role: "assistant",
+    parts: [
+      {
+        type: "text",
+        text: "Did you know? Honey never spoils. Archaeologists have found edible honey in ancient Egyptian tombs!",
+      },
+    ],
+    content:
+      "Did you know? Honey never spoils. Archaeologists have found edible honey in ancient Egyptian tombs!",
+    createdAt: new Date("2025-06-08T10:01:05Z"),
   },
 ];

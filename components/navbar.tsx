@@ -21,16 +21,21 @@ export default function Navbar() {
   const { isSidebarOpen, toggleSidebar } = useSidebar();
 
   return (
-    <nav className="fixed top-0 left-0 w-full h-14 flex items-center justify-between px-2 z-[100]">
+    <nav className="fixed top-0 left-0 w-full h-14 flex items-center justify-between px-2 z-[200] pointer-none">
       {/* Toggle Button */}
       <div className="flex items-center justify-center bg-white shadow-lg rounded-md hover:bg-gray-50 transition-colors border border-gray-200">
-        <Button onClick={toggleSidebar} variant="ghost" size="icon">
+        <Button
+          onClick={toggleSidebar}
+          variant="ghost"
+          size="icon"
+          className="pointer-events-auto"
+        >
           <Sidebar size={16} />
         </Button>
         <AnimatePresence initial={false}>
           {!isSidebarOpen && (
             <motion.div
-              className="flex items-center"
+              className="flex items-center pointer-events-auto"
               initial={{ width: 0, opacity: 0 }}
               animate={{ width: "auto", opacity: 1 }}
               exit={{ width: 0, opacity: 0 }}
@@ -65,12 +70,12 @@ export default function Navbar() {
         </AnimatePresence>
       </div>
 
-      <div className="flex items-center justify-center bg-white shadow-lg rounded-md hover:bg-gray-50 transition-colors border border-gray-200">
+      <div className="flex items-center justify-center rounded-md bg-pink-100">
         <Button variant="ghost" size="icon">
-          <Settings size={24} />
+          <Settings size={28} />
         </Button>
         <Button variant="ghost" size="icon">
-          {isDarkTheme ? <MoonIcon size={20} /> : <SunIcon size={20} />}
+          {isDarkTheme ? <MoonIcon size={24} /> : <SunIcon size={24} />}
         </Button>
       </div>
     </nav>

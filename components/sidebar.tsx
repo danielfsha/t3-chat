@@ -1,60 +1,30 @@
 "use client";
 
-import React from "react";
-import { LogOut, PinIcon, X } from "lucide-react";
-
+import React, { useState } from "react";
+import { LogOut, PinIcon, Search, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-
 import { useSidebar } from "@/context/sidebar-context";
-
+import { useIsMobile } from "@/hooks/use-mobile";
 import { SIDEBAR_WIDTH } from "@/lib/constants";
-
-import { motion } from "motion/react";
-
-interface Conversation {
-  id: string;
-  title: string;
-  lastMessage: string;
-  timestamp: string;
-}
-
-const conversations: Conversation[] = [
-  {
-    id: "1",
-    title: "React Best Practices",
-    lastMessage: "How do I optimize React components?",
-    timestamp: "2 hours ago",
-  },
-  {
-    id: "2",
-    title: "TypeScript Help",
-    lastMessage: "Explain generic types in TypeScript",
-    timestamp: "1 day ago",
-  },
-  {
-    id: "3",
-    title: "CSS Grid Layout",
-    lastMessage: "Creating responsive layouts with CSS Grid",
-    timestamp: "3 days ago",
-  },
-  {
-    id: "4",
-    title: "API Integration",
-    lastMessage: "Best practices for REST API calls",
-    timestamp: "1 week ago",
-  },
-];
+import { motion } from "framer-motion";
+import { Input } from "./ui/input";
 
 export default function Sidebar() {
+  const [searchQuery, setSearchQuery] = useState("");
   const { isSidebarOpen, toggleSidebar } = useSidebar();
+  const isMobile = useIsMobile();
 
   return (
     <motion.div
       initial={{ x: -SIDEBAR_WIDTH }}
       animate={{ x: isSidebarOpen ? 0 : -SIDEBAR_WIDTH }}
       transition={{ type: "spring", stiffness: 300, damping: 30 }}
-      className={`fixed top-0 left-0 w-[256px] h-full z-40 text-white`}
+      className={`fixed top-0 left-0 w-[256px] h-full text-white ${
+        isMobile
+          ? "bg-white/80 backdrop-blur-md shadow-sm z-[100]"
+          : "bg-transparent"
+      }`}
     >
       <div className="flex flex-col h-full p-4 py-2 pb-6">
         {/* Header */}
@@ -67,37 +37,43 @@ export default function Sidebar() {
           />
         </div>
 
-        <button className="bg-[#D3699B] border-[#8E3B65] border-1 w-full flex items-center justify-center gap-3 p-3 py-2 rounded-md text-white transition-colors">
+        <button className="mt-2 bg-[#D3699B] border-[#8E3B65] border-1 w-full flex items-center justify-center gap-3 p-3 py-2 rounded-md text-white transition-colors">
           <span className="font-bold text-sm">New Chat</span>
         </button>
 
-        {/* Conversations */}
-        <div className="flex-1  overflow-hidden overflow-y-auto">
-          <h3 className="text-xs text-gray-400 my-4">Recent Conversations</h3>
-          <div className="flex flex-col space-y-1">
-            {conversations.map((conversation) => (
-              <motion.div
-                key={conversation.id}
-                className="relative p-2.5 rounded-lg hover:bg-white cursor-pointer transition-colors group w-full"
-                initial={{ opacity: 0, x: -50 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: 50 }}
-                transition={{ type: "spring", stiffness: 300, damping: 30 }}
-              >
-                <h4 className="text-[13px] truncate text-pink-950 group-hover:text-pink-600 transition-colors">
-                  {conversation.title}
-                </h4>
+        {/* Search */}
+        <div className="p-2 pb-0 border-b border-pink-900 w-full text-pink-950">
+          <div className="relative">
+            <Search className="absolute w-4 h-4 left-1 top-1/2 transform -translate-y-1/2" />
+            <Input
+              type="text"
+              placeholder="Search chats..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="border-b pl-8"
+            />
+          </div>
+        </div>
 
-                <div className="absolute -right-[200px] top-0 h-full flex items-center justify-center group-hover:right-1 transition-all">
-                  <button className="w-7 h-7 flex items-center justify-center rounded-md hover:bg-pink-400">
-                    <PinIcon size={16} className="text-pink-950" />
-                  </button>
-                  <button className="w-7 h-7 flex items-center justify-center rounded-md hover:bg-pink-400">
-                    <X size={16} className="text-pink-950" />
-                  </button>
-                </div>
-              </motion.div>
-            ))}
+        {/* Conversations */}
+        <div className="flex-1 overflow-hidden overflow-y-auto">
+          <h3 className="text-xs text-gray-400 my-4">Your Chats</h3>
+          <div className="flex flex-col space-y-1">
+            <div
+              className={`relative p-2.5 rounded-lg cursor-pointer transition-colors group w-full text-pink-950 hover:bg-white px-4 py-2 transition-colors`}
+              onClick={() => alert("Chat clicked!")}
+            >
+              <h4 className="text-[13px] truncate">Untitled chat</h4>
+
+              <div className="absolute -right-[200px] top-0 h-full flex items-center justify-center group-hover:right-1 transition-all">
+                <button className="w-7 h-7 flex items-center justify-center rounded-md hover:bg-pink-400">
+                  <PinIcon size={16} className="text-pink-950" />
+                </button>
+                <button className="w-7 h-7 flex items-center justify-center rounded-md hover:bg-pink-400">
+                  <X size={16} className="text-pink-950" />
+                </button>
+              </div>
+            </div>
           </div>
         </div>
 

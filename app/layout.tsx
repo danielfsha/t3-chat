@@ -1,16 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
   title: "T3 Chat",
@@ -19,6 +8,7 @@ export const metadata: Metadata = {
 
 import { ReactQueryClientProvider } from "@/context/query-client";
 import { SidebarProvider } from "@/context/sidebar-context";
+import { ChatMessageProvider } from "@/hooks/use-chat-messages";
 
 export default function RootLayout({
   children,
@@ -27,12 +17,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <ReactQueryClientProvider>
-          <SidebarProvider>{children}</SidebarProvider>
-        </ReactQueryClientProvider>
+      <body suppressHydrationWarning className={`antialiased`}>
+        <ChatMessageProvider>
+          <ReactQueryClientProvider>
+            <SidebarProvider>{children}</SidebarProvider>
+          </ReactQueryClientProvider>
+        </ChatMessageProvider>
       </body>
     </html>
   );
